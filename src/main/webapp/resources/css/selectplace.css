@@ -1,0 +1,92 @@
+.main-container {
+  padding-top: 40px;
+}
+
+.header {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-weight: normal;
+  font-size: 42px;
+  color: #555555;
+  padding-bottom: 5px;
+  margin: 0px 0px 0px 0px;
+}
+
+.header p {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 25px;
+}
+
+#map-canvas-holder {
+  height: 370px;
+  font-size: 14px;
+  display: block;
+}
+
+.map-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#place-search-form-group label {
+  text-align: left;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.submit-place-container {
+  padding-top: 10px;
+}
+
+.place-infobox .infobox-content {
+  background-color: #fff;
+  padding: 5px;
+  padding-left: 10px;
+  text-align: left;
+  margin-top: 5px;
+  font-size: 14px;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.place-infobox .infobox-content p{
+  margin-bottom: 0px;
+}
+
+.place-infobox muted {
+  color: #999;
+}
+
+/*.place-infobox>.arrow{
+  top: 0px;
+  width: 4px;
+  left: 50%;
+  margin-left: 0px;
+  margin-top: -7px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 19px solid #fff;
+  border-width: 8px;
+}
+
+.place-infobox>.arrow-after {
+  top: 0px;
+  width: 5px;
+  left: 50%;
+  margin-left: 0px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 19px solid #ccc;
+  border-width: 8px;
+}*/
