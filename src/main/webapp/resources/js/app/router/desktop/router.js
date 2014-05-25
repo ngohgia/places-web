@@ -19,8 +19,7 @@ define("router", [
             MainTemplate) {
 
     $(document).ready(new function() {
-       utilities.applyTemplate($('body'), MainTemplate);
-       //$('#loading').hide('fast');
+       utilities.applyTemplate($('#body-content'), MainTemplate);
     })
 
     var vent = _.extend({}, Backbone.Events);
