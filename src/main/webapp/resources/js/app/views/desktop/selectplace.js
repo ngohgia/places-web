@@ -48,12 +48,10 @@ define([
             });
             this.placesSearchView.render();
 
-            vent.bind('select_place', this.selectPlace, this);
-
             vent.bind('places_retrieved', this.addNearbyPlaces, this);
             vent.bind('places_added', this.combinePlaces, this);
-            vent.bind('map_recentered', this.updatePlaces, this);
-
+            vent.bind('update_places', this.updatePlaces, this);
+            
             //_.bindAll(this, 'new_place');
         },
 
@@ -68,7 +66,7 @@ define([
         selectPlace: function(place){
             this.selectedPlace = place;
 
-            this.updateLocation(new google.maps.LatLng(place.lat, place.lng));
+            //this.updateLocation(new google.maps.LatLng(place.lat, place.lng));
             if ($('#submit-place-btn').hasClass('disabled'))
                 $('#submit-place-btn').removeClass('disabled');
             //console.log(this.selectedPlace);
@@ -77,12 +75,7 @@ define([
         submitPlace: function(e) {
             e.preventDefault();
             
-            console.log(this.selectedPlace);
-            vent.trigger('place_selected', this.selectedPlace);
-        },
-
-        updateLocation: function(location) {
-            this.mapView.updateMap(location);
+            //console.log(this.selectedPlace);
         },
 
         updatePlaces: function(data){
@@ -96,8 +89,9 @@ define([
             this.foursquarePlacesColl = [];
             this.nearbyPlacesColl = [];
 
-            this.markers = [];
             this.mapView.clearMarkers(this.markers);
+            this.markers = [];
+
             this.mapView.updatePlaces(data);
         },
 

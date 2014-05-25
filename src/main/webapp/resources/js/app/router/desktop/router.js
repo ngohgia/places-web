@@ -6,6 +6,7 @@ define("router", [
     'app/views/desktop/home',
     'app/views/desktop/signup',
     'app/views/desktop/accessibility',
+    'app/views/desktop/manager',
     'text!../templates/desktop/main.html'
 ],function ($,
             _,
@@ -14,10 +15,12 @@ define("router", [
             HomeView,
             SignupView,
             AccessibilityView,
+            ManagerView,
             MainTemplate) {
 
     $(document).ready(new function() {
-       utilities.applyTemplate($('body'), MainTemplate)
+       utilities.applyTemplate($('body'), MainTemplate);
+       //$('#loading').hide('fast');
     })
 
     var vent = _.extend({}, Backbone.Events);
@@ -41,6 +44,7 @@ define("router", [
             "signup": "signup",
             "newplace": "newplace",
             "access": "access",
+            "manager": "manager",
         },
         
         // default route
@@ -58,7 +62,13 @@ define("router", [
             utilities.viewManager.showView(new AccessibilityView({
                 el:$("#content"),
                 vent: vent}));           
-        }
+        },
+
+        // manager route
+        manager: function() {
+            console.log("ManagerView");
+            utilities.viewManager.showView(new ManagerView({el:$("#content")}));
+        },
     });
 
     // Create a router instance

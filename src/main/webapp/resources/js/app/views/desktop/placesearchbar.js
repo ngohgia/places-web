@@ -23,13 +23,14 @@ define([
                 }
 
                 //console.log(place.geometry.location.lat() + ", " + place.geometry.location.lng());
-                rayPlace.address = place.formatted_address;
+                rayPlace.placeinfo.address = place.formatted_address;
 
                 rayPlace.lat = place.geometry.location.lat();
                 rayPlace.lng = place.geometry.location.lng();
                 //console.log("search: " + this.address + ", " + this.lat + ", " + this.lng);
 
-                options.vent.trigger('location_selected', rayPlace);
+                var location = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
+                options.vent.trigger('new_location', location);
             });
         },
 

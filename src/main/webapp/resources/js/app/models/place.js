@@ -5,6 +5,8 @@ define([
     'utilities',
 ], function(utilities){
 	var Place = Backbone.Model.extend({
+		uid : "",
+		created_by: "",
 		ray_id : "",
 		google_id : "",
 		google_ref : "",
@@ -13,8 +15,13 @@ define([
 		lat : 0.0,
 		lng : 0.0,
 
-		placeinfo : {},
-		accessibility : {},
+		placeinfo : {
+			name : "",
+			address : "",
+			phone : "",
+			categories : [],
+		},
+		accessinfo : {},
 
 		updateDetails : function(placeInfo){
 			this.placeinfo = placeInfo;

@@ -12,23 +12,25 @@ define([
 ], function($, _, utilities, Backbone, GoogleMap, PlaceModel, PlacesRetriever, placeUtils, InfoBox, MapTemplate){
     var vent;
     var infowindow = new google.maps.InfoWindow();
+    var ZOOM_LVL = 17;
+
+    var blindFriendlyIcon = 'resources/img/blind_friendly.png';
+    var blindUnfriendlyIcon = 'resources/img/blind_unfriendly.png';
+    var blindFriendlyIconSel = 'resources/img/blind_friendly_sel.png';
+    var blindUnfriendlyIconSel = 'resources/img/blind_unfriendly_sel.png';
 
     var MapView = Backbone.View.extend({
         initialize: function(options){
             vent = options.vent;
             vent.bind('googlerefs_done', this.extractFromGooglePlaces, this);
             vent.bind('get_google_place_details', this.getGooglePlaceDetails, this);
-            vent.bind('show_place_info', this.showPlaceInfo, this);
+
+            vent.bind('new_location', this.updateMap, this);
 
             utilities.applyTemplate($(this.el), MapTemplate,{});
 
-            this.blindFriendlyIcon = 'resources/img/blind_friendly.png';
-            this.blindUnfriendlyIcon = 'resources/img/blind_unfriendly.png';
-            this.blindFriendlyIconSel = 'resources/img/blind_friendly_sel.png';
-            this.blindUnfriendlyIconSel = 'resources/img/blind_unfriendly_sel.png';
-
             this.map = new google.maps.Map($('.map-canvas')[0], {
-                zoom: 17,
+                zoom: ZOOM_LVL,
                 position: new google.maps.LatLng(null, null),
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
@@ -48,6 +50,7 @@ define([
                 closeBoxMargin: "11px 5px 5px 5px",
                 closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
                 infoBoxClearance: new google.maps.Size(1, 1),
+                disableAutoPan: true,
                 isHidden: false,
                 pane: "floatPane",
                 enableEventPropagation: false,
@@ -55,6 +58,11 @@ define([
             this.infoBox = new InfoBox(ibOptions);
             
             var map = this.map;
+
+            google.maps.event.addListener(map, 'center_changed', function() {
+                //$('#loading').show();
+            });
+
             google.maps.event.addListener(this.map, 'tilesloaded', function() { 
                 var bounds = map.getBounds();
 
@@ -63,7 +71,7 @@ define([
                 var searchRad = placeUtils.getDist(center.lat(), center.lng(), ne.lat(), ne.lng());
                 console.log("Search rad: " + searchRad);
 
-                vent.trigger('map_recentered', {location: center, rad: searchRad});
+                vent.trigger('update_places', {location: center, rad: searchRad});
             });
         },
 
@@ -72,7 +80,8 @@ define([
 
             if (navigator && navigator.geolocation) {
                 var map = this.map;
-                //var vent = this.vent;
+            
+
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
                         var pos = new google.maps.LatLng(
@@ -80,7 +89,6 @@ define([
                             position.coords.longitude
                         );
                         map.setCenter(pos);
-                        vent.trigger('new_place');
                     }, function(e) {
                         switch(e){
                             case 1:
@@ -106,7 +114,7 @@ define([
             }
             if (location){
                 this.map.setCenter( location);
-                this.map.setZoom(17);
+                this.map.setZoom(ZOOM_LVL);
             }
         },
 
@@ -160,10 +168,10 @@ define([
                 var icon;
                 var accessible;
                 if (places[i].ray_id == ""){
-                    icon = this.blindUnfriendlyIcon;
+                    icon = blindUnfriendlyIcon;
                     accessible = false;
                 } else {
-                    icon = this.blindFriendlyIcon;
+                    icon = blindFriendlyIcon;
                     accessible = true;
                 }
 
@@ -174,20 +182,24 @@ define([
                     position: new google.maps.LatLng(places[i].lat, places[i].lng),
                     map: this.map,
                     //animation: google.maps.Animation.DROP,
-                    title: place.placeinfo.name,
+                    //title: place.placeinfo.name,
                     accessible: accessible,
+                    selected: false,
                 });
 
                 google.maps.event.addListener(marker, 'click', 
-                    this.getPlaceInfoCallback(this.map, this.placesService, place, marker, this.infoBox, this.blindFriendlyIcon));
+                    this.selectPlaceCallback(place, marker, markers));
                 google.maps.event.addListener(marker, 'mouseover', 
-                    this.setMouseOverMarkerCallback(marker, this.blindFriendlyIconSel, this.blindUnfriendlyIconSel));
+                    this.getPlaceInfoCallback(this.map, this.placesService, place, marker, this.infoBox));
                 google.maps.event.addListener(marker, 'mouseout', 
-                    this.setMouseOutMarkerCallback(marker, this.blindFriendlyIcon, this.blindUnfriendlyIcon));
+                    this.setMouseOutMarkerCallback(marker));
 
                 markers.push(marker);
                 marker.setMap(this.map);
             }
+
+            //console.log($('#loading'));
+            //$('#loading').hide('400');
         },
 
         getGooglePlaceDetails : function(places){
@@ -198,26 +210,45 @@ define([
             }
         },
 
-        setMouseOverMarkerCallback : function(marker, blindFriendlyIconSel, blindUnfriendlyIconSel){
+        selectPlaceCallback : function(place, sel_marker, markers){
             return function(){
-                if (marker.accessible == true)
-                    marker.setIcon(blindFriendlyIconSel);
-                else
-                    marker.setIcon(blindUnfriendlyIconSel);
+                for (var i= 0; i< markers.length; i++){
+                    if (markers[i].accessible == true){
+                        markers[i].setIcon(blindFriendlyIcon);
+                        markers[i].selected = false;
+                    } else {
+                        markers[i].setIcon(blindUnfriendlyIcon);
+                        markers[i].selected = false;
+                    }
+                }
+
+                if (sel_marker.accessible == true){
+                    sel_marker.setIcon(blindFriendlyIconSel);
+                    sel_marker.selected = true;
+                } else {
+                    sel_marker.setIcon(blindUnfriendlyIconSel);
+                    sel_marker.selected = true;
+                }
+
+                vent.trigger('select_place', place);
             }
         },
 
-        setMouseOutMarkerCallback : function(marker, blindFriendlyIcon, blindUnfriendlyIcon){
+        setMouseOutMarkerCallback : function(marker){
             return function(){
-                if (marker.accessible == true)
-                    marker.setIcon(blindFriendlyIcon);
-                else
-                    marker.setIcon(blindUnfriendlyIcon);
+                if (marker.selected == false){
+                    if (marker.accessible == true)
+                        marker.setIcon(blindFriendlyIcon);
+                    else
+                        marker.setIcon(blindUnfriendlyIcon);
+                }
             }
         },
 
-        getPlaceInfoCallback : function(map, placesService, place, marker, infobox, blindFriendlyIcon){
+        getPlaceInfoCallback : function(map, placesService, place, marker, infobox){
             return function(){
+                setMouseOverMarker(marker, blindFriendlyIconSel, blindUnfriendlyIconSel);
+
                 if (place.google_ref == ""){
                     showPlaceInfo(map, place, marker, infobox);
                 } else {
@@ -236,13 +267,35 @@ define([
                     });
                 }
 
-                function showPlaceInfo(map, place, marker, infoBox, blindFriendlyIcon){
-                    vent.trigger('select_place', place);
+                function setMouseOverMarker(marker){
+                    
+                    if (marker.accessible == true){
+                        marker.setIcon(blindFriendlyIconSel);
+                    } else {
+                        marker.setIcon(blindUnfriendlyIconSel);
+                    }
+                }
+
+                function showPlaceInfo(map, place, marker, infoBox){
+                    //vent.trigger('select_place', place);
                     var contentString = 
-                        '<div class="place-infobox"/>' +
+                        '<div class="arrow"></div>' +
+                        '<div class="place-infobox">' +
                             '<div class="infobox-content">'+
                                 '<p><b>' + place.placeinfo.name + '</b></p>'+
                                 '<div id="bodyContent">';
+                    if (marker.accessible == true){   
+                        contentString += '<div class="accessible">' +         
+                                '<p><span class="glyphicon glyphicon-ok-sign infobox-glyph"></span>' +
+                                'Accessibility information available</p>' +
+                                '</div>';
+                    } else {
+                        contentString += '<div class="not-accessible">' +         
+                                '<p><span class="glyphicon glyphicon-exclamation-sign infobox-glyph"></span>' +
+                                'No accessibility information available</p>' +
+                                '</div>';
+                    }
+
                     if (place.placeinfo.address != "")
                         contentString += 
                                 ('<p>Address: ' + place.placeinfo.address + '</p>');

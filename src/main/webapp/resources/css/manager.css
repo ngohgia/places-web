@@ -1,6 +1,14 @@
+#content {
+  padding-top: 30px;
+}
+
 .main-container {
   padding-top: 40px;
-  padding-bottom: 40px;
+}
+
+.container-no-margin{
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .header {
@@ -22,14 +30,7 @@
   line-height: 25px;
 }
 
-#placeinfo-container {
-  padding-top: 20px;
-}
-
-#access-container {
-  padding-bottom: 20px;
-}
-
-#new_place_added_alert {
-  display: none;
+#tab-content {
+  padding-top: 40px;
+  padding-bottom: 40px;
 }

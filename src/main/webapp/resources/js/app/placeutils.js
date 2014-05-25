@@ -57,7 +57,7 @@ define([
             result = [];
             for (var i=0; i< categories.length; i++)
                 if ($.inArray(categories[i], GENERIC_PLACE_CATEGORIES) == -1)
-                    result.push(categories[i]);
+                    result.push(categories[i].toLowerCase());
             return result;
         },
 
@@ -65,7 +65,7 @@ define([
             result = [];
             for (var i=0; i< categories.length; i++){
 
-                result.push(categories[i].name);
+                result.push(categories[i].name.toLowerCase());
             }
             return result;
         },

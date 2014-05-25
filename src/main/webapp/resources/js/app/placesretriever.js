@@ -56,9 +56,11 @@ define([
                     rayPlace.placeinfo = {
                         name: place.name,
                         phone: place.phone,
-                        address : "",       //TODO CHANGE THIS ON THE SERVER
+                        address : place.address,
                         type: typesTmp,
                     };
+
+                    rayPlace.accessinfo = place.accessInfo;
 
                     //console.log(rayPlace);
                     placesColl.push(rayPlace);
@@ -114,7 +116,8 @@ define([
                         };
 
                         //console.log(place);
-                        placesColl.push(rayPlace);
+                        if (rayPlace.placeinfo.address)
+                            placesColl.push(rayPlace);
                         //console.log(rayPlace);
                     });
                     

@@ -68,25 +68,49 @@
   color: #999;
 }
 
-/*.place-infobox>.arrow{
-  top: 0px;
-  width: 4px;
-  left: 50%;
-  margin-left: 0px;
-  margin-top: -7px;
-  border-left: 9px solid transparent;
-  border-right: 9px solid transparent;
-  border-bottom: 19px solid #fff;
-  border-width: 8px;
+.infoBox>.arrow, .infoBox>.arrow:after{
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
 }
 
-.place-infobox>.arrow-after {
-  top: 0px;
-  width: 5px;
+.infoBox>.arrow:after{
+  content: " ";
+  top: -9px;
+  margin-left: -10px;
+  border-top-width: 0;
+  border-bottom-color: #fff;
+  border-width: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.infoBox>.arrow{
+  border-width: 11px;
   left: 50%;
-  margin-left: 0px;
-  border-left: 9px solid transparent;
-  border-right: 9px solid transparent;
-  border-bottom: 19px solid #ccc;
-  border-width: 8px;
-}*/
+  margin-left: -11px;
+  border-top-width: 0;
+  border-bottom-color: #999;
+  border-bottom-color: rgba(0,0,0,.25);
+  top: -5px;
+}
+
+.infobox-glyph{
+  padding-right: 3px;
+}
+
+#bodyContent>.accessible{
+  color: #3c763d;
+  padding-top:2px;
+  padding-bottom:2px;
+}
+
+#bodyContent>.not-accessible{
+  padding-top:2px;
+  padding-bottom:2px;
+  color: #a94442;
+}

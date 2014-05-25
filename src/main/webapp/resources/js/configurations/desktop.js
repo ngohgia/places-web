@@ -24,6 +24,10 @@ requirejs.config({
             exports: 'Backbone'
         },
 
+        'bootstrap': {
+            deps: ['jquery']
+        },
+
         'underscore': {
             exports: '_'
         }

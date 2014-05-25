@@ -15,7 +15,7 @@ define([
             vent = options.vent;
 
             utilities.applyTemplate($(this.el), InfoInputTemplate,{});
-            options.vent.bind('place_selected', this.updatePlaceInfoInputs, this);
+            options.vent.bind('select_place', this.updatePlaceInfoInputs, this);
         },
 
         events : {
