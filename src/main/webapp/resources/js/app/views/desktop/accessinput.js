@@ -7,7 +7,7 @@ define([
     'text!../../../../templates/desktop/accessinput.html'
 ], function (utilities, _, AccessInputTemplate) {
     var config = {
-        ADD_NEW_PLACE_URL : "http://rapi-rayplaces.rhcloud.com/rayplaces?query=add_place",
+        ADD_NEW_PLACE_URL : "http://api-rayplaces.rhcloud.com/rayplaces?query=add_place",
     };
 
     var vent;
