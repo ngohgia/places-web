@@ -14,7 +14,7 @@
 	background-color: rgb(168, 168, 168);;
 	opacity: 0.2;
 	z-index: 100;
-	position: absolute;
+	position: fixed;
 	display: none;
 }
 
