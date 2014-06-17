@@ -25,3 +25,13 @@
 	margin-top: -64px;
 	position: absolute;
 }
+
+.ray-btn {
+  background-color: #8ec041;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.ray-btn:hover {
+  background-color: #c6ea32;
+}

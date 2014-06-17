@@ -16,11 +16,11 @@ define([
             autocomplete = new google.maps.places.Autocomplete(this.input);
             google.maps.event.addListener(autocomplete, 'place_changed', function() {
                 place = autocomplete.getPlace();
-                if (!place.geometry) {
+                /* if (!place.geometry) {
                   if (!$('#submit-place-btn').hasClass('disabled'))
                     $('#submit-place-btn').addClass('disabled');
                   return;
-                }
+                }*/
 
                 //console.log(place.geometry.location.lat() + ", " + place.geometry.location.lng());
                 rayPlace.placeinfo.address = place.formatted_address;
@@ -30,6 +30,9 @@ define([
                 //console.log("search: " + this.address + ", " + this.lat + ", " + this.lng);
 
                 var location = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
+                console.log("Selected place");
+                console.log(location);
+
                 options.vent.trigger('new_location', location);
             });
         },

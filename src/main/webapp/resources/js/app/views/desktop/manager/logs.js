@@ -6,8 +6,8 @@ define([
     'text!../../../../../templates/desktop/logs.html'
 ], function (utilities, LogsTemplate) {
     var config = {
-        LOGS_DB_QUERY : "http://raynavdb-ngohgia.rhcloud.com/rayplaces?query=view_logs",
-        LOGS_DB_SIZE_QUERY : "http://raynavdb-ngohgia.rhcloud.com/rayplaces?query=get_logs_db_size"
+        LOGS_DB_QUERY : "http://api-rayplaces.rhcloud.com/rayplaces?query=view_logs",
+        LOGS_DB_SIZE_QUERY : "http://api-rayplaces.rhcloud.com/rayplaces?query=get_logs_db_size"
     };
 
     var start;
@@ -31,7 +31,7 @@ define([
                 url: getLogsDbSizeURL,
                 contentType: 'text/plain',
                 xhrFields: {
-                    withCredentials: false
+                    withCredentials: true
                 },
                 headers: {},
             })
@@ -85,8 +85,9 @@ define([
                 url: retrieveLogsURL,
                 contentType: 'text/plain',
                 xhrFields: {
-                    withCredentials: false
+                    withCredentials: true
                 },
+                crossDomain: true,
                 headers: {},
             })
             .done(function(data){

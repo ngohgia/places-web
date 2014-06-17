@@ -7,7 +7,7 @@ define([
     'app/models/place',
 ], function ($, placeUtils, PlaceModel) {
     var config = {
-        RAYPLACES_SEARCH_URL : 'http://raynavdb-ngohgia.rhcloud.com/rayplaces?query=search_places',
+        RAYPLACES_SEARCH_URL : 'http://api-rayplaces.rhcloud.com/rayplaces?query=search_places',
         RAYPLACES_PUBLIC_ID  : 'public_ray',
 
         FOURSQUARE_SEARCH_URL : 'https://api.foursquare.com/v2/venues/search?',
@@ -28,9 +28,10 @@ define([
                 type: 'GET',
                 url: placesSearchURL,
                 contentType: 'text/plain',
+                /*
                 xhrFields: {
-                    withCredentials: false
-                },
+                    withCredentials: true
+                },*/
                 headers: {},
             })
             .done(function(data){
@@ -83,14 +84,16 @@ define([
             var placesColl = [];
 
             if (rad < config.FOURSQUARE_MAX_RAD){
+                $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+                    options.xhrFields = {
+                      withCredentials: false
+                    };
+                  });
+
                 $.ajax({
                     type: 'GET',
                     url: placesSearchURL,
                     contentType: 'text/plain',
-                    xhrFields: {
-                        withCredentials: false
-                    },
-                    headers: {},
                 })
                 .done(function(data){
                     $.each(data.response.venues, function(idx, place){

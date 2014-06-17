@@ -15,3 +15,33 @@
 	margin-top: -64px;
 	position: absolute;
 }
+
+.profile-dropdown {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	color: #999;
+}
+
+.profile-dropdown:hover{
+	color: white;
+}
+
+#user-dropdown {
+	padding-right: 6px;
+}
+
+#user-dropdown:hover{
+	color: white;
+}
+
+.ray-btn {
+  background-color: #8ec041;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.ray-btn:hover {
+  background-color: #c6ea32;
+}

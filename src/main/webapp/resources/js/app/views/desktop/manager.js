@@ -3,19 +3,32 @@
  */
 define([
     'utilities',
+    'app/models/session',
     'app/views/desktop/manager/recordslog',
     'app/views/desktop/manager/logs',
     'text!../../../../templates/desktop/manager.html'
-], function (utilities, RecordsLogView, LogsView, ManagerTemplate) {
+], function (utilities, Session, RecordsLogView, LogsView, ManagerTemplate) {
 
     var ManagerView = Backbone.View.extend({
-        render:function () {
-            utilities.applyTemplate($(this.el),ManagerTemplate,{});
-            this.recordsLogView = new RecordsLogView({el: $('#tab-content')});
-            this.logsView = new LogsView({el: $('#tab-content')});
+        initialize: function() {
+            var that = this;
+    
+            Session.setAuth();
+            Session.on('change:auth', function (session) {
+                that.render();
+            });
+        },
 
-            $("li[id='view_logs']").trigger('click');
-            return this;
+        render:function () {
+            if (Session.get("auth") == 'admin') {
+                utilities.applyTemplate($(this.el),ManagerTemplate,{});
+                this.recordsLogView = new RecordsLogView({el: $('#tab-content')});
+                this.logsView = new LogsView({el: $('#tab-content')});
+
+                $("li[id='view_logs']").trigger('click');
+            } else {
+                require('router').navigate("", {trigger: true});
+            }
         },
 
         events: {

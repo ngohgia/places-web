@@ -6,8 +6,8 @@ define([
     'text!../../../../../templates/desktop/recordslog.html'
 ], function (utilities, RecordsLogTemplate) {
     var config = {
-        RECORDS_DB_QUERY : "http://raynavdb-ngohgia.rhcloud.com/rayplaces?query=view_recordings",
-        RECORDS_SIZE_QUERY : "http://raynavdb-ngohgia.rhcloud.com/rayplaces?query=get_records_db_size"
+        RECORDS_DB_QUERY : "http://api-rayplaces.rhcloud.com/rayplaces?query=view_recordings",
+        RECORDS_SIZE_QUERY : "http://api-rayplaces.rhcloud.com/rayplaces?query=get_records_db_size"
     };
 
     var start;

@@ -27,7 +27,7 @@ define([
         },
 
         events : {
-            "click .submit-access-info" : "submitAccessInfo"
+            "click button[id=submit-place-btn]" : "submitAccessInfo"
         },
 
         updatePlaceAccessInputs: function(data){
@@ -52,6 +52,8 @@ define([
 
         submitAccessInfo: function(e){
             e.preventDefault();
+            $("#submit-place-btn").addClass('disabled');
+            $("#submit-place-btn").html("Processing");
             var accessInput = [];
 
             for (var i= 0; i< inputFields.length; i++){
@@ -100,12 +102,15 @@ define([
             });
             
             request.done(function(data){
+                $("#submit-place-btn").removeClass('disabled');
+                $("#submit-place-btn").html("Submit");
+
                 $('#loading').hide('400');
                 $('#new_place_name_alert').text(placeJSON.name);
                 $('html,body').animate({
                     scrollTop: $('.accessibility-container').offset().top - 50},
                 400);
-                $('#new_place_added_alert').show('fast').delay(2000).slideUp('slow');
+                $('#new_place_added_alert').show('fast').delay(5000).slideUp('slow');
             });
         },
     });

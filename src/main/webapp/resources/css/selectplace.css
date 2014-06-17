@@ -114,3 +114,18 @@
   padding-bottom:2px;
   color: #a94442;
 }
+
+#map-legends {
+  padding-top: 7px;
+}
+
+#map-legends span{
+  padding-left: 30px;
+}
+
+#map-legends img{
+  height: 34px;
+  width: auto;
+}
+
+

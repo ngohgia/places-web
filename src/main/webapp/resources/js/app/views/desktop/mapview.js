@@ -111,8 +111,10 @@ define([
             if (!location){
                 c = this.map.getCenter();
                 location = new google.maps.LatLng(c.lat(), c.lng());
-            }
-            if (location){
+            } else {
+                console.log("Update map")
+                console.log(location)   
+
                 this.map.setCenter( location);
                 this.map.setZoom(ZOOM_LVL);
             }
@@ -121,6 +123,9 @@ define([
         updatePlaces: function(data){
             var location = data.location;
             var searchRad = data.rad;
+
+            if (searchRad == null || searchRad == 0)
+                searchRad = 500;
 
             console.log(location);
             console.log(searchRad);
@@ -292,7 +297,7 @@ define([
                     } else {
                         contentString += '<div class="not-accessible">' +         
                                 '<p><span class="glyphicon glyphicon-exclamation-sign infobox-glyph"></span>' +
-                                'No accessibility information available</p>' +
+                                'Enter accessibility information</p>' +
                                 '</div>';
                     }
 

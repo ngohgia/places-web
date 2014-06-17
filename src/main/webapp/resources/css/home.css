@@ -5,6 +5,8 @@
 #index-banner{
   padding-top: 25px;
   padding-bottom: 20px;
+  background-image: url(../img/banner.png);
+  height: 189px;
 }
 
 .container-no-margin{
@@ -12,8 +14,27 @@
   padding-right: 0;
 }
 
-.login-img {
+.login-welcome {
 
+}
+
+.login-welcome h1{
+  font-size: 63px;
+  padding-top: 40px;
+}
+
+.login-welcome p{
+  padding-top: 20px;
+  font-size: 21px;
+  font-weight: 200;
+}
+
+#more_info_btn{
+  margin-top: 20px;
+}
+
+#signin-btn {
+  width: 100%;
 }
 
 .signin-container {
@@ -39,7 +60,7 @@
   text-align: left;
 }
 
-.signin-container .sign-in-button {
+.signin-container {
   width: 100%;
 }
 

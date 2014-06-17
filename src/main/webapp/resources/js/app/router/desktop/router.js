@@ -2,24 +2,30 @@ define("router", [
     'jquery',
     'underscore',
     'configuration',
-    'utilities',    
+    'utilities',
+    'app/models/session',
     'app/views/desktop/home',
     'app/views/desktop/signup',
     'app/views/desktop/accessibility',
     'app/views/desktop/manager',
-    'text!../templates/desktop/main.html'
+    'text!../templates/desktop/main.html',
+    'text!../templates/desktop/nav_noauth.html',
 ],function ($,
             _,
             config,
             utilities,
+            Session,
             HomeView,
             SignupView,
             AccessibilityView,
             ManagerView,
-            MainTemplate) {
+            MainTemplate,
+            NavbarNoAuthTemplate) {
 
     $(document).ready(new function() {
        utilities.applyTemplate($('#body-content'), MainTemplate);
+       utilities.applyTemplate($('#navbar-container'), NavbarNoAuthTemplate);
+       //utilities.viewManager.showView(new HomeView({el:$("#content")}));
     })
 
     var vent = _.extend({}, Backbone.Events);
@@ -32,12 +38,28 @@ define("router", [
 
     var Router = Backbone.Router.extend({
         initialize: function() {
+            var that = this;
             //Begin dispatching routes
-            vent.bind('place_selected', this.accessibility, this);
+            //vent.bind('place_selected', this.accessibility, this);
+            //Backbone.history.start();
+            /*Session.getAuth(function () {});
+
+            var that = this;
+            // Bind to the Session auth attribute so we
+            // make our view act recordingly when auth changes
+            Session.on('change:user', function (session) {
+                that.render();
+            });*/
 
             Backbone.history.start();
+            //console.log(Session.getAuth());
+
+            /*Session.on('change:auth', function (session) {
+                console.log(Session.get('auth'));
+                that.render();
+            });*/
         },
-        //TODO Remember 404 route
+
         routes : {
             "": "home",
             "signup": "signup",
@@ -45,9 +67,13 @@ define("router", [
             "access": "access",
             "manager": "manager",
         },
-        
-        // default route
-        home : function () {
+
+        render: function(){
+           
+        },
+
+        // home route
+        home : function(){
             utilities.viewManager.showView(new HomeView({el:$("#content")}));
         },
 
