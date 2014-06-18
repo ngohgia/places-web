@@ -123,6 +123,11 @@ define([
         updatePlaces: function(data){
             var location = data.location;
             var searchRad = data.rad;
+            
+            if (!location){
+                c = this.map.getCenter();
+                location = new google.maps.LatLng(c.lat(), c.lng());
+            }
 
             if (searchRad == null || searchRad == 0)
                 searchRad = 500;

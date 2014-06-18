@@ -111,6 +111,8 @@ define([
                     scrollTop: $('.accessibility-container').offset().top - 50},
                 400);
                 $('#new_place_added_alert').show('fast').delay(5000).slideUp('slow');
+                
+                vent.trigger('update_places', {});
             });
         },
     });
