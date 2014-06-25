@@ -7,7 +7,7 @@ define([
     'app/models/place',
 ], function ($, placeUtils, PlaceModel) {
     var config = {
-        RAYPLACES_SEARCH_URL : 'http://api-rayplaces.rhcloud.com/rayplaces?query=search_places',
+    	RAYPLACES_SEARCH_URL : 'http://api-rayplaces.rhcloud.com/rayplaces?query=search_places',
         RAYPLACES_PUBLIC_ID  : 'public_ray',
 
         FOURSQUARE_SEARCH_URL : 'https://api.foursquare.com/v2/venues/search?',
@@ -41,7 +41,7 @@ define([
                 $.each($.parseJSON(data), function(idx, place){
                     var rayPlace = new PlaceModel();
                     rayPlace.ray_id = place._id.$oid;
-                    rayPlace.google_id = place.googleId;
+                    rayPlace.google_id = place.google_id;
                     rayPlace.foursquare_id = place.foursquare_id;
 
                     rayPlace.lat = place.lat;
@@ -58,10 +58,11 @@ define([
                         name: place.name,
                         phone: place.phone,
                         address : place.address,
-                        type: typesTmp,
+                        categories: typesTmp,
                     };
 
-                    rayPlace.accessinfo = place.accessInfo;
+                    rayPlace.accessinfo = place.access_info;
+                    rayPlace.customizedAccessInfo = place.customized_access_info;
 
                     //console.log(rayPlace);
                     placesColl.push(rayPlace);
