@@ -72,6 +72,7 @@ define([
             var accessInfo = place.accessInfo;
             console.log(accessInfo);
 
+            $('.access-input').val("");
             for (var i= 0; i< accessInfo.length; i++){
                 var info = accessInfo[i];
 
