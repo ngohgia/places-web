@@ -61,7 +61,7 @@ define([
                         categories: typesTmp,
                     };
 
-                    rayPlace.accessinfo = place.access_info;
+                    rayPlace.accessinfo = place.accessInfo;
                     rayPlace.customizedAccessInfo = place.customized_access_info;
 
                     //console.log(rayPlace);
