@@ -69,7 +69,7 @@ define([
 
         updatePlaceAccessInputs: function(data){
             place = data;
-            var accessInfo = place.accessinfo;
+            var accessInfo = place.access_info;
             console.log(accessInfo);
 
             for (var i= 0; i< accessInfo.length; i++){

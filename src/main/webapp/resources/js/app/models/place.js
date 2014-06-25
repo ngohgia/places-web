@@ -21,7 +21,8 @@ define([
 			phone : "",
 			categories : [],
 		},
-		accessinfo : {},
+		accessInfo : {},
+		customizedAccessInfo : {},
 
 		updateDetails : function(placeInfo){
 			this.placeinfo = placeInfo;
