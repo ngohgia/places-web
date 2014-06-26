@@ -4,7 +4,7 @@ define([
   'backbone'
 ], function(require, _, Backbone) {
   var SessionModel = Backbone.Model.extend({
-    urlRoot: 'http://users-rayplaces.rhcloud.com/authenticate?query=getsession',
+    urlRoot: 'http://placesapi-ngohgia.rhcloud.com/authenticate?query=getsession',
 
     initialize: function () {
       var that = this;
@@ -24,7 +24,7 @@ define([
 
     login: function(creds) {
       var that = this;
-      var loginUrl = 'http://users-rayplaces.rhcloud.com/authenticate?query=signin';
+      var loginUrl = 'http://placesapi-ngohgia.rhcloud.com/authenticate?query=signin';
 
       $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
         options.xhrFields = {
@@ -54,7 +54,7 @@ define([
 
     logout: function() {
       var that = this;
-      var logoutUrl = 'http://users-rayplaces.rhcloud.com/authenticate?query=signout';
+      var logoutUrl = 'http://placesapi-ngohgia.rhcloud.com/authenticate?query=signout';
       console.log("try logout");
 
       $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {

@@ -8,7 +8,7 @@ define([
     'text!../../../../templates/desktop/signup.html'
 ], function (require, utilities, Session, SignupTemplate) {
     var config = {
-        USER_SIGNUP_URL : 'http://users-rayplaces.rhcloud.com/authenticate?query=signup'
+        USER_SIGNUP_URL : 'http://placesapi-ngohgia.rhcloud.com/authenticate?query=signup'
     };
 
     var SignupView = Backbone.View.extend({
